@@ -16,6 +16,17 @@ const server = http.createServer((req, res) => {
         res.end(content, 'utf-8');
       }
     });
+  } else if (req.url === '/api/products') {
+    const dbPath = path.join(__dirname, 'db.json');
+    fs.readFile(dbPath, (err, content) => {
+      if (err) {
+        res.writeHead(500);
+        res.end('Error loading database');
+      } else {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(content, 'utf-8');
+      }
+    });
   } else {
     res.writeHead(404);
     res.end('Not Found');

@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Modern Sofa",
+      "category": "Furniture",
+      "price": 499.99,
+      "image": "https://images.unsplash.com/photo-1540574163024-58846249491a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A stylish and comfortable sofa for your living room."
+    },
+    {
+      "id": 2,
+      "name": "Wooden Dining Table",
+      "category": "Furniture",
+      "price": 799.99,
+      "image": "https://images.unsplash.com/photo-1511204399395-5854df14c6e5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A beautiful and sturdy dining table for family meals."
+    },
+    {
+      "id": 3,
+      "name": "Bookshelf",
+      "category": "Furniture",
+      "price": 199.99,
+      "image": "https://images.unsplash.com/photo-1594210452393-3b4d45103643?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A spacious bookshelf to organize your books."
+    },
+    {
+      "id": 4,
+      "name": "Wireless Headphones",
+      "category": "Electronics",
+      "price": 149.99,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "High-quality wireless headphones with noise cancellation."
+    },
+    {
+      "id": 5,
+      "name": "Smart Watch",
+      "category": "Electronics",
+      "price": 249.99,
+      "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A stylish smart watch with fitness tracking features."
+    }
+  ]
+}

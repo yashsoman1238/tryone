@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-commerce Site</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to our E-commerce Site!</h1>
+    <div id="products"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/products')
+                .then(response => response.json())
+                .then(data => {
+                    const productsContainer = document.getElementById('products');
+                    data.products.forEach(product => {
+                        const productElement = document.createElement('div');
+                        productElement.classList.add('product');
+                        productElement.innerHTML = `
+                            <img src="${product.image}" alt="${product.name}">
+                            <h2>${product.name}</h2>
+                            <p>${product.description}</p>
+                            <p><strong>Price:</strong> $${product.price}</p>
+                        `;
+                        productsContainer.appendChild(productElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                    const productsContainer = document.getElementById('products');
+                    productsContainer.innerHTML = '<p>Error loading products. Please try again later.</p>';
+                });
+        });
+    </script>
 </body>
 </html>

@@ -60,6 +60,30 @@
             renderCart();
         }
 
+        function removeFromCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function updateQuantity(productId, newQuantity) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItem = cart.find(item => item.id === productId);
+
+            if (cartItem) {
+                const quantity = parseInt(newQuantity, 10);
+                if (quantity > 0) {
+                    cartItem.quantity = quantity;
+                } else {
+                    cart = cart.filter(item => item.id !== productId);
+                }
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartItemsContainer = document.getElementById('cart-items');
@@ -76,7 +100,11 @@
                     cartItemElement.classList.add('cart-item');
                     cartItemElement.innerHTML = `
                         <span>${item.name}</span>
-                        <span>$${item.price} x ${item.quantity}</span>
+                        -
+                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)" style="width: 50px; text-align: center;">
+                        x
+                        <span>$${item.price}</span>
+                        <button onclick="removeFromCart(${item.id})">Remove</button>
                     `;
                     cartItemsContainer.appendChild(cartItemElement);
                     total += item.price * item.quantity;

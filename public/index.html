@@ -31,6 +31,9 @@
         <h2>Shopping Cart</h2>
         <div id="cart-items"></div>
         <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
+        <div id="checkout-button-container" style="display: none; margin-top: 10px;">
+            <a href="checkout.html"><button>Checkout</button></a>
+        </div>
     </div>
 
     <hr>
@@ -88,13 +91,16 @@
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotalElement = document.getElementById('cart-total');
+            const checkoutButtonContainer = document.getElementById('checkout-button-container');
             let total = 0;
 
             cartItemsContainer.innerHTML = ''; // Clear the cart
 
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                checkoutButtonContainer.style.display = 'none';
             } else {
+                checkoutButtonContainer.style.display = 'block';
                 cart.forEach(item => {
                     const cartItemElement = document.createElement('div');
                     cartItemElement.classList.add('cart-item');

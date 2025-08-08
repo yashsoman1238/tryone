@@ -88,6 +88,39 @@ const server = http.createServer((req, res) => {
                 res.end(JSON.stringify({ message: 'Invalid JSON' }));
             }
         });
+    } else if (req.url === '/api/my-products' && req.method === 'GET') {
+        const authHeader = req.headers['authorization'];
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ message: 'Authorization token is required' }));
+        }
+
+        const token = authHeader.split(' ')[1];
+        // Very simple token validation: 'fake-token-USERID-TIMESTAMP'
+        const parts = token.split('-');
+        if (parts.length !== 4 || parts[0] !== 'fake' || parts[1] !== 'token') {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ message: 'Invalid token format' }));
+        }
+
+        const userId = parseInt(parts[2], 10);
+        if (isNaN(userId)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ message: 'Invalid user ID in token' }));
+        }
+
+        const dbPath = path.join(__dirname, 'db.json');
+        fs.readFile(dbPath, 'utf8', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                return res.end(JSON.stringify({ message: 'Error reading product database' }));
+            }
+            const allProducts = JSON.parse(data).products;
+            const myProducts = allProducts.filter(p => p.sellerId === userId);
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(myProducts));
+        });
     } else { // Handle static file serving
         const publicDir = path.join(__dirname, 'public');
         let filePath = path.join(publicDir, req.url === '/' ? 'index.html' : req.url);

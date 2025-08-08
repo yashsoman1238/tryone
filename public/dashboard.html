@@ -35,7 +35,71 @@
         </main>
     </div>
     <script>
-        // Logic for this page will be added in the next steps
+        function renderProducts(products) {
+            const container = document.getElementById('my-products');
+            container.innerHTML = ''; // Clear existing content
+
+            if (!products || products.length === 0) {
+                container.innerHTML = '<p>You have not added any products yet.</p>';
+                return;
+            }
+
+            const productList = document.createElement('ul');
+            productList.style.listStyle = 'none';
+            productList.style.padding = '0';
+
+            products.forEach(product => {
+                const productItem = document.createElement('li');
+                productItem.style.border = '1px solid #ccc';
+                productItem.style.padding = '10px';
+                productItem.style.marginBottom = '10px';
+                productItem.innerHTML = `
+                    <strong>${product.name}</strong> - $${product.price}
+                    <p>${product.description}</p>
+                    <button>Edit</button>
+                    <button>Delete</button>
+                `;
+                productList.appendChild(productItem);
+            });
+            container.appendChild(productList);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('authToken');
+
+            // The script in the <head> should prevent this from running if not logged in.
+            if (!token) {
+                return;
+            }
+
+            fetch('/api/my-products', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.json();
+            })
+            .then(products => {
+                if (products) {
+                    renderProducts(products);
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                document.getElementById('my-products').innerHTML = '<p>Could not fetch your products.</p>';
+            });
+        });
     </script>
 </body>
 </html>

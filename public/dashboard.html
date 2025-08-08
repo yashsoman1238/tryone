@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - E-commerce Site</title>
+    <script>
+        // Check for auth token. Redirect to login if not found.
+        if (!localStorage.getItem('authToken')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <style>
+        body { font-family: sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Seller Dashboard</h1>
+            <a href="index.html">Back to Shop</a>
+        </header>
+        <main>
+            <h2>My Products</h2>
+            <div id="my-products">
+                <!-- Products will be listed here by JavaScript -->
+            </div>
+            <hr>
+            <h2>Add a New Product</h2>
+            <div id="add-product-form-container">
+                <!-- Add product form will go here -->
+            </div>
+        </main>
+    </div>
+    <script>
+        // Logic for this page will be added in the next steps
+    </script>
+</body>
+</html>

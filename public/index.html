@@ -54,6 +54,7 @@
             if (token && user) {
                 authContainer.innerHTML = `
                     <span>Welcome, ${user.email}</span>
+                    <a href="dashboard.html" style="margin: 0 10px;">Dashboard</a>
                     <button onclick="logout()">Logout</button>
                 `;
             } else {

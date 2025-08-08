@@ -25,6 +25,9 @@
     </style>
 </head>
 <body>
+    <header style="padding: 10px; text-align: right; border-bottom: 1px solid #ccc; margin-bottom: 20px;">
+        <div id="auth-container"></div>
+    </header>
     <h1>Welcome to our E-commerce Site!</h1>
 
     <div id="cart-container">
@@ -42,6 +45,30 @@
 
     <script>
         let products = [];
+
+        function updateAuthUI() {
+            const authContainer = document.getElementById('auth-container');
+            const token = localStorage.getItem('authToken');
+            const user = JSON.parse(localStorage.getItem('user'));
+
+            if (token && user) {
+                authContainer.innerHTML = `
+                    <span>Welcome, ${user.email}</span>
+                    <button onclick="logout()">Logout</button>
+                `;
+            } else {
+                authContainer.innerHTML = `
+                    <a href="login.html">Login</a> | <a href="register.html">Register</a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('cart');
+            window.location.reload();
+        }
 
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
@@ -121,6 +148,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
             renderCart(); // Render cart on page load
             fetch('/api/products')
                 .then(response => response.json())
